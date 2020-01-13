@@ -17,7 +17,7 @@ class ForecastController extends BaseController
 
     public function show(string $city)
     {
-        $forecast = $this->weatherRepository->showThirtyDayForecast($city);
+        $forecast = $this->weatherRepository->showForecast($city);
 
         return response()
             ->json($forecast);

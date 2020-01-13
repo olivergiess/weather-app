@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Contracts\WeatherRepository', \App\Repositories\OpenWeatherRepository::class);
+        $this->app->bind('App\Contracts\WeatherRepository', \App\Repositories\WeatherBitRepository::class);
     }
 
     /**

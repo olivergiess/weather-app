@@ -3,11 +3,12 @@
 namespace App\Repositories;
 
 use App\Contracts\WeatherRepository;
+use App\Exceptions\WeatherException;
 use App\Http\Resources\ForecastCollection;
-use App\Http\Resources\ForecastResource;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 
-class OpenWeatherRepository implements WeatherRepository
+class WeatherBitRepository implements WeatherRepository
 {
     protected $client;
 
@@ -18,10 +19,10 @@ class OpenWeatherRepository implements WeatherRepository
         ]);
     }
 
-    public function showThirtyDayForecast(string $city)
+    public function showForecast(string $city, int $days = 5)
     {
         $result = $this->request('GET', 'forecast/daily', [
-            'days' => 5,
+            'days' => $days,
             'city' => $city,
             'country' => 'AU'
         ]);
@@ -31,13 +32,15 @@ class OpenWeatherRepository implements WeatherRepository
         return $collection;
     }
 
-    private function request(string $method, string $uri, array $params = [])
+    private function request(string $method, string $uri, array $params = []) : object
     {
         $queryParams = $this->mergeParams($params);
 
         $response = $this->client->request($method, $uri, [
             'query' => $queryParams
         ]);
+
+        $this->handleErrors($response);
 
         $result = json_decode($response->getBody());
 
@@ -50,5 +53,17 @@ class OpenWeatherRepository implements WeatherRepository
             'key' => env('WEATHERBIT_API_KEY'),
             'units' => env('WEATHERBIT_API_UNITS')
         ]);
+    }
+
+    private function handleErrors(Response $response) : void
+    {
+        $allowedStatuses = [
+            200
+        ];
+
+        $statusCode = $response->getStatusCode();
+
+        if(!in_array($statusCode, $allowedStatuses))
+            throw new WeatherException();
     }
 }

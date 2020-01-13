@@ -4,18 +4,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>{{ env('APP_NAME') }}</title>
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
-        <div class="min-h-screen">
-            <div class="flex content-center justify-center">
-                <div id="wrapper"></div>
-            </div>
-
-            <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+        <div class="flex items-center justify-center h-screen">
+            <div id="forecast" class="w-10/12 md:w-1/2" />
         </div>
+
+        <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

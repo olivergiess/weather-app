@@ -21,7 +21,7 @@ class ForecastResource extends JsonResource
             'avg' => $this->temp,
             'low' => $this->low_temp,
             'high' => $this->high_temp,
-            'weather' => $this->getWeather()
+            'status' => $this->getWeather()
         ];
     }
 
@@ -34,6 +34,6 @@ class ForecastResource extends JsonResource
 
     private function getWeather()
     {
-        return ucwords($this->weather->description)
+        return ucwords($this->weather->description);
     }
 }
