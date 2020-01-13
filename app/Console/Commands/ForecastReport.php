@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 
 use App\Contracts\WeatherRepository;
 use Carbon\Carbon;
-use App\Exceptions\WeatherException;
 
 class ForecastReport extends Command
 {
@@ -86,9 +85,9 @@ class ForecastReport extends Command
             {
                 $forecast = $this->repository->showForecast($city, $days)->resolve();
             }
-            catch (WeatherException $e)
+            catch (\Exception $e)
             {
-                $this->error($e->getMessage());
+                $this->error('Unable to retrieve forecast.');
                 die;
             }
 
