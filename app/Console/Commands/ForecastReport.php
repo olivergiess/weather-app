@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 
 use App\Contracts\WeatherRepository;
 use Carbon\Carbon;
+use App\Exceptions\WeatherException;
 
 class ForecastReport extends Command
 {
@@ -81,7 +82,15 @@ class ForecastReport extends Command
         {
             $city = trim($city);
 
-            $forecast = $this->repository->showForecast($city, $days)->resolve();
+            try
+            {
+                $forecast = $this->repository->showForecast($city, $days)->resolve();
+            }
+            catch (WeatherException $e)
+            {
+                $this->error($e->getMessage());
+                die;
+            }
 
             $rows[] = array_merge([$city], array_column($forecast, 'status'));
         }

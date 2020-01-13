@@ -64,6 +64,8 @@ class WeatherBitRepository implements WeatherRepository
         $statusCode = $response->getStatusCode();
 
         if(!in_array($statusCode, $allowedStatuses))
+        {
             throw new WeatherException();
+        }
     }
 }
