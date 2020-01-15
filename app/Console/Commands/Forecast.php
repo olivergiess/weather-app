@@ -6,15 +6,16 @@ use Illuminate\Console\Command;
 
 use App\Contracts\WeatherRepository;
 use Carbon\Carbon;
+use App\Exceptions\WeatherException;
 
-class ForecastReport extends Command
+class Forecast extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'report:forecast 
+    protected $signature = 'forecast 
                             {cities : Comma delimited list of Cities. \'}
                             {days=5 : Number of days to retrieve for. }';
 
@@ -64,7 +65,7 @@ class ForecastReport extends Command
 
         for($i = 1; $i <= $days; $i++)
         {
-            $headers[] = $today->add(1, 'day')->format('l jS F Y');
+            $headers[] = $today->add(1, 'day')->format('l');
         }
 
         return $headers;
@@ -85,9 +86,9 @@ class ForecastReport extends Command
             {
                 $forecast = $this->repository->showForecast($city, $days)->resolve();
             }
-            catch (\Exception $e)
+            catch (WeatherException $e)
             {
-                $this->error('Unable to retrieve forecast.');
+                $this->error($e->getMessage());
                 die;
             }
 

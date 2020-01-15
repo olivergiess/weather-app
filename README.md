@@ -70,7 +70,11 @@ End with an example of getting some data out of the system or using it for a lit
 
 ## Running the tests
 
-Tests are yet to be implemented.
+In order to run the tests please ensure application is setup as above following which you can use the following command
+
+```
+phpunit
+```
 
 ## Usage
 
@@ -79,7 +83,7 @@ A browser can be used to view an interactive form for checking the weather.
 Or the following command can be run to display a tabulated report for a list of cities.
 
 ```
-php artisan forecast:report 'brisbane, gold coast, sunshine coast'
+php artisan forecast 'brisbane, gold coast, sunshine coast'
 ```
 
 ## Design Decisions
@@ -88,7 +92,11 @@ Communication between React components via props, I decided against observer/flu
 
 Implemented repository pattern to allow for IoC, this facilitates maintainable code by offloading API interactions into it's own class.
 
-Choose to write unit tests post development rather than TDD (this was so that I could deliver the project on time), unfortunately this lead to no unit testing being completed.
+Wrote unit tests post development rather than TDD.
+
+Decided against implementing synchronous API calls for the report due to time constraints on development.
+
+Predominantly successful tests cases.
 
 ## Assumptions
 
