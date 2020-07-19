@@ -23,7 +23,7 @@
         "eslint-plugin-react": "^7.17.0",
         "eslint-plugin-standard": "^4.0.1",
         "laravel-mix": "^4.0.7",
-        "lodash": "^4.17.13",
+        "lodash": "^4.17.19",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
         "resolve-url-loader": "^2.3.1",
